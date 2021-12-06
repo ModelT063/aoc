@@ -112,6 +112,7 @@ void part2(){
                 L.s.x > L.d.x ? L.s.x--: L.s.x++; 
                 L.s.y > L.d.y ? L.s.y--: L.s.y++; 
             }
+            graph[L.s.x][L.s.y]++;
         }
     }
 
