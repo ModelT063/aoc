@@ -53,46 +53,8 @@ int Board::score(int num){
     }
     return score * num;
 }
-/*
-int part1(){
-    ifstream in{"input.txt"};
-    // contains the numbers to call
-    vector<int> nums(100);
-    // contains a list of all the boards being played
-    vector<Board> boards;
-    
-    // reads in the numbers to be called 
-    char buff;
-    int i = 0;
-    while(in >> nums[i++] >> buff && i < 99);
-    in >> nums[i];
 
-    // reads in boards and puts them into vector of boards
-    while(in){
-        boards.emplace(boards.end(), Board());
-        for(auto &i: boards.back().numbers){
-            for(auto &j: i){
-                in >> j;
-            }
-        }
-    }
-    boards.pop_back();
-    // should be 100? reads in extra board of all 0s after file has terminated
-    cout << "# of Boards: " << boards.size() << endl;
-
-    // goes through boards, and nums and "calls" them
-    for(auto i: nums){
-        for(auto &j: boards){
-            j.call(i);
-            // returns the score upon finding the first winner
-            if(j.winner()) return j.score(i);
-        }
-    }
-    // fail case
-    return 0;
-}*/
-
-void part2(){   
+void squidBingo(){   
     ifstream in{"input.txt"};
     // contains the numbers to call
     vector<int> nums(100);
@@ -117,14 +79,17 @@ void part2(){
     boards.pop_back();
     
     int count = 0;
-    // goes through boards, and nums and "calls" them
+    // goes through boards, and nums and "calls" each number
     for(auto i: nums){
         for(int j = 0; j < boards.size(); j++){
             boards[j].call(i);
-            // prints scores of all the winners
+            // when a board wins, it removes it from the boards vector
             if(boards[j].winner()){
-                if(count == 0 || count == 99) cout << count++ << ": " << boards[j].score(i) << endl;
+                // if it's the first winning board (part 1) or the last (part 2), it prints the score
+                if(count == 0 || count == 99) 
+                    cout << "Board #" << ++count << " Score: " << boards[j].score(i) << endl;
                 else count++;
+                // removes from vector
                 boards.erase(boards.begin() + j);
                 j--;
             }
@@ -133,6 +98,6 @@ void part2(){
 }
 
 int main(){
-    part2();
+    squidBingo();
     return 0;
 }
