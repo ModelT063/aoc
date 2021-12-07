@@ -1,15 +1,13 @@
 #include <fstream>
 #include <iostream>
 #include <vector>
+#include <algorithm>
 using namespace std;
-
 
 void lanternfish(int days){
     ifstream in{"input.txt"};
     vector<unsigned long long int> fish(9, 0);
     unsigned long long int temp;
-    unsigned long long int temp2;
-    unsigned long long int old;
     char comma;
     
     //reads in data
@@ -18,20 +16,11 @@ void lanternfish(int days){
         in >> comma;
     }
 
-    temp = 0;
-    temp2 = 0;
     // simulates # of days
     for(int i = 0; i < days; i++){
         // updates the number of fish j days away from a child
-        for(int j = 8; j >= 0; j--){
-            if(j == 8) old = fish[0];
-            temp2 = fish[j];
-            fish[j] = temp;
-            temp = temp2;
-        }
-        // re-adds fish that just birthed
-        fish[6] += old;
-        temp = fish[0];
+		rotate(fish.begin(), fish.begin() + 1, fish.end());
+		fish[6] += fish[8];
     }
 
     // adds up number of fish
