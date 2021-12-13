@@ -7,11 +7,11 @@
 using namespace std;
 
 void part1(){
-    ifstream in{"test.txt"};
+    ifstream in{"input.txt"};
     string temp;
     stack<char> chunks;
     int corrupt[4] = {0};
-    vector<int> scores;
+    vector<long> scores;
 
     while(getline(in, temp)){
         for(char c: temp){
